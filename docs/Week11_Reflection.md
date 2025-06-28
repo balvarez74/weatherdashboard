@@ -122,6 +122,6 @@ ____
 Complete these setup steps before Monday:
     ✅ Push main.py, config.py, and a /data/ folder to your repo
     ✅ Add OpenWeatherMap key to .env (⚠️ Do not commit the key)
-    TBD Copy chosen feature templates into /features/
+    ✅ Copy chosen feature templates into /features/
     ✅ Commit and push a first-draft README.md
     ✅ Book office hours if you're still stuck on API setup
