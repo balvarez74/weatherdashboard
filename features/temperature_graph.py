@@ -9,7 +9,7 @@ def plot_temperature_history(frame, temperature_data):
     fig, ax = plt.subplots(figsize=(6, 3), dpi=100)
     ax.plot(temperature_data, color='orange', marker='o')
 
-    # set x-ticks to past 7 days
+    # set x-ticks to past 5 days
     labels = [
         (datetime.today() - timedelta(days=len(temperature_data)-1-i)).strftime("%a")
         for i in range(len(temperature_data))
@@ -18,7 +18,7 @@ def plot_temperature_history(frame, temperature_data):
     ax.set_xticklabels(labels, color='white')
 
     # set axis labels and titles
-    ax.set_title("Temperature (Past 7 Days)", color='white', pad=10, fontsize=12, fontweight='bold')
+    ax.set_title("Average Daily Temperature (Past 5 Days)", color='white', pad=10, fontsize=10, fontweight='bold')
     ax.set_ylabel("°F", color='white')
     ax.set_xlabel("Day", color='white')
     ax.tick_params(colors='white')

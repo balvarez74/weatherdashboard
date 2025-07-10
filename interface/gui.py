@@ -1,0 +1,80 @@
+import tkinter as tk
+from tkinter import messagebox
+from features.temperature_graph import plot_temperature_history
+
+def create_dashboard(update_callback):
+    root = tk.Tk()
+    root.title("Weather App")
+    root.geometry("1000x600")
+    root.configure(bg="#1E1E1E") # set the background to dark mode
+
+    # grid config - allow resizing of grid
+    root.grid_columnconfigure(0, weight=0) # sidebar is fixed, wont resize
+    root.grid_columnconfigure(1, weight=1) # graph will resize
+    root.grid_rowconfigure(0, weight=0) # title stays fixed height
+    root.grid_rowconfigure(1, weight=1)
+
+    # title
+    label = tk.Label(root, text="Weather Dashboard", font="Helvetica 16",
+                     fg="white", bg="#1E1E1E")
+    label.grid(row=0, column=0, columnspan=2, sticky="ew", padx=20, pady=(10, 20))
+
+    # sidebar
+    current_stats_frame = tk.Frame(root, width=180, bg="#2B2B2B")
+    current_stats_frame.grid(row=1, column=0, sticky="n", padx=20, pady=20) # place sidebar below title
+    current_stats_frame.grid_propagate(False) # prevent frame from resizing
+
+    # default labels to test layout of frame
+    city_label = tk.Label(current_stats_frame, text="Please Enter a City!",
+                          fg="#FFFFFF", bg="#2B2B2B", font=("Helvetica", 12))
+    city_label.pack(pady=(10, 5))
+
+    temp_label = tk.Label(current_stats_frame, text="", fg="#D3D3D3",
+                          bg="#2B2B2B", font=("Helvetica", 16, "bold"))
+    temp_label.pack(pady=5)
+
+    wind_label = tk.Label(current_stats_frame, text="", fg="#AAAAAA",
+                          bg="#2B2B2B", font=("Helvetica", 10))
+    wind_label.pack(pady=(5, 15))
+    humidity_label = tk.Label(current_stats_frame, text="", fg="#AAAAAA",
+                            bg="#2B2B2B", font=("Helvetica", 10))
+    humidity_label.pack(pady=(5, 15))
+
+    # graph area
+    tempgraph_frame = tk.Frame(root, bg="#1E1E1E")
+    tempgraph_frame.grid(row=1, column=1, padx=20, pady=20, sticky="nsew")
+    tempgraph_frame.pack_propagate(False)
+
+    # city input
+    placeholder = "Enter City Name"
+    city_entry = tk.Entry(root, width=30, font=("Helvetica", 12), bg="#333333", fg="gray", insertbackground="white")
+    city_entry.insert(0, placeholder)
+    city_entry.grid(row=2, column=0, sticky="w", padx=20, pady=(0, 20))
+
+    def usertyping(event=None):
+        if city_entry.get() == placeholder:
+            city_entry.delete(0, tk.END)  # clear placeholder text
+            city_entry.config(fg="white")  # change text color to white
+
+    def on_focus_out(event=None):
+        if city_entry.get() == "":
+            city_entry.insert(0, placeholder)
+            city_entry.config(fg="gray")  # change text color to gray
+
+    city_entry.bind("<FocusIn>", usertyping)
+    city_entry.bind("<FocusOut>", on_focus_out)
+    
+    def on_click():
+        city = city_entry.get().strip()
+        if city == placeholder or not city:
+            messagebox.showwarning("Input Error", "Please enter a valid city name.")
+            return
+        else:
+            update_callback(city, city_label, temp_label, wind_label, humidity_label, tempgraph_frame)  # call the update function with the city name
+
+
+    # refresh button
+    button = tk.Button(root, text="Get Weather", command=on_click)
+    button.grid(row=2, column=0, sticky="e", padx=20, pady=(0, 20))
+
+    return root, city_label, temp_label, wind_label, humidity_label, tempgraph_frame
