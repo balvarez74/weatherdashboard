@@ -40,8 +40,6 @@ def update_weather(city, city_label, temp_label, wind_label, humidity_label, tem
         humidity = current["main"]["humidity"]
         humidity_label.config(text=f"Humidity: {humidity}%")
 
-
-
         # update graph w/ 5-day average temps
         temps = get_daily_avg_temps(city)
         plot_temperature_history(tempgraph_frame, temps)
@@ -59,7 +57,6 @@ def update_weather(city, city_label, temp_label, wind_label, humidity_label, tem
         messagebox.showerror("Connection Error", "Network problem. Please check your internet connection.")
     except Exception:
         messagebox.showerror("Error", "An unexpected error occurred while fetching weather data.")
-
 
 # convert degrees to compass direction
 def deg_to_compass(deg):
