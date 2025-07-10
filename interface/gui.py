@@ -1,8 +1,14 @@
+"""interface/gui.py
+
+Creates and manages the Tkinter GUI for the weather dashboard, including layout, input, and display widgets.
+"""
+
 import tkinter as tk
 from tkinter import messagebox
 from features.temperature_graph import plot_temperature_history
 
 def create_dashboard(update_callback):
+    """Builds Tkinter UI and returns root and key UI elements."""
     root = tk.Tk()
     root.title("Weather App")
     root.geometry("1000x600")
@@ -52,11 +58,13 @@ def create_dashboard(update_callback):
     city_entry.grid(row=2, column=0, sticky="w", padx=20, pady=(0, 20))
 
     def usertyping(event=None):
+        """Clears placeholder text and changes font color when user begins typing."""
         if city_entry.get() == placeholder:
             city_entry.delete(0, tk.END)  # clear placeholder text
             city_entry.config(fg="white")  # change text color to white
 
     def on_focus_out(event=None):
+        """Restores placeholder text if the input field is left empty on focus out."""
         if city_entry.get() == "":
             city_entry.insert(0, placeholder)
             city_entry.config(fg="gray")  # change text color to gray
@@ -65,6 +73,7 @@ def create_dashboard(update_callback):
     city_entry.bind("<FocusOut>", on_focus_out)
     
     def on_click():
+        """Event happens when 'Get Weather' button is clicked, validates input, and triggers weather update."""
         city = city_entry.get().strip()
         if city == placeholder or not city:
             messagebox.showwarning("Input Error", "Please enter a valid city name.")

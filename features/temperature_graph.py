@@ -1,5 +1,13 @@
-# line graph of temperature history for the current week
-# matplotlib embedded in tkinter
+"""
+    Function plot_temperature_history plots average daily temperature data for the past 5 days using Matplotlib and embeds the chart in a Tkinter frame.
+
+    Parameters:
+        frame (tk.Frame): The Tkinter frame where the graph should be displayed.
+        temperature_data (list of float): A list of temperature values for each day.
+
+    Returns:
+        None
+    """
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg

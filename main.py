@@ -1,3 +1,19 @@
+"""
+main.py
+
+Initialized Weather Dashboard application.
+
+- Initializes Tkinter GUI via the create_dashboard function from interface.gui.
+- Connects the user interface to the update_weather logic from weather_update file.
+- Triggers initial weather fetch using default city ("New York").
+- Starts the Tkinter main event loop.
+
+Functions:
+    - updatewd(city): Wrapper function that passes required widgets and city to update_weather.
+
+Returns:
+    None
+"""
 from interface.gui import create_dashboard
 from weather_update import update_weather
 
