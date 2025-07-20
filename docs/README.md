@@ -1,5 +1,5 @@
 # Weather Dashboard
-A desktop weather app built with Python, Tkinter, and the OpenWeatherMap API. Enter a city name in the bottom left input field. Click 'Enter' to view current temperature, humidity, wind direction, and a 5-day temperature trend graph.
+A weather app built with Python, Tkinter, and the OpenWeatherMap API. Enter a city name in the bottom left input field. Click 'Enter' to view current temperature, humidity, wind direction, and a 5-day temperature trend graph.
 
 ## Features
 - Real-time weather updates by city name

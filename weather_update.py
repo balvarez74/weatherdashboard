@@ -9,6 +9,7 @@ from weather_api import get_current_weather
 from features.temperature_graph import plot_temperature_history
 from tkinter import messagebox
 from weather_api import get_daily_avg_temps
+from features.weather_history import save_daily_weather, calculate_average_temperature, get_recent_temperatures
 import requests
 
 def update_weather(city, city_label, temp_label, wind_label, humidity_label, tempgraph_frame):
@@ -40,9 +41,21 @@ def update_weather(city, city_label, temp_label, wind_label, humidity_label, tem
         humidity = current["main"]["humidity"]
         humidity_label.config(text=f"Humidity: {humidity}%")
 
-        # update graph w/ 5-day average temps
-        temps = get_daily_avg_temps(city)
-        plot_temperature_history(tempgraph_frame, temps)
+        # save today's data to CSV
+        save_daily_weather(city, temp_f)
+
+        # Try getting 7 days from CSV
+        df = get_recent_temperatures(city, 7)
+        if len(df) == 7:
+            temps = df["temperature"].tolist()[::-1]
+            title = f"{city.title()} Avg Temp (Last 7 Days)"
+        else:
+            temps = get_daily_avg_temps(city)
+            title = f"{city.title()} Avg Temp (Last 5 Days)"
+
+
+        plot_temperature_history(tempgraph_frame, temps, title)
+
     
     # error handling for issues during weather data fetching
     except requests.exceptions.HTTPError as http_err:
@@ -55,7 +68,8 @@ def update_weather(city, city_label, temp_label, wind_label, humidity_label, tem
             messagebox.showerror("Error", f"An HTTP error occurred: {status_code}")
     except requests.exceptions.RequestException:
         messagebox.showerror("Connection Error", "Network problem. Please check your internet connection.")
-    except Exception:
+    except Exception as e:
+        print(f"LINE 74 Unexpected error: {e}")
         messagebox.showerror("Error", "An unexpected error occurred while fetching weather data.")
 
 # convert degrees to compass direction
