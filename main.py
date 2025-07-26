@@ -21,7 +21,7 @@ def updatewd(city="New York"):
     update_weather(city, city_label, temp_label, wind_label, humidity_label, tempgraph_frame)
 
 # Create full UI and get key widgets
-root, city_label, temp_label, wind_label, humidity_label, tempgraph_frame = create_dashboard(update_weather)
+root, city_label, temp_label, wind_label, humidity_label, tempgraph_frame, theme_button = create_dashboard(update_weather)
 
 # Trigger initial load
 updatewd()  # Default city
