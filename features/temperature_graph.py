@@ -32,7 +32,7 @@ def plot_temperature_history(frame, temperature_data, title="Average Temperature
     ax.tick_params(colors='white')
     ax.set_facecolor("#1E1E1E")
     fig.patch.set_facecolor("#1E1E1E")
-    fig.tight_layout(pad=2)
+    fig.subplots_adjust(left=0.25, right=0.85, top=0.8, bottom=0.2)
     ax.grid(True)
 
     # clear previous graph
